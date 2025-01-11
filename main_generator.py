@@ -2,13 +2,13 @@ import argparse
 from datagenerator.generator import generate_data
 
 parser = argparse.ArgumentParser(
-    prog='File Data Generator',
-    description='Generate daily Data')
+    prog="File Data Generator",
+    description="Generate Daily Data")
 
 
-parser.add_argument('-dd', '--desired_dir')
-parser.add_argument('-n', '--number_of_id', default=1000)
-parser.add_argument('-d', '--day')
+parser.add_argument("-dd", "--desired_dir")
+parser.add_argument("-n", "--number_of_id", default=1000)
+parser.add_argument("-d", "--day")
 
 args = parser.parse_args()
 

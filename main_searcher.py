@@ -27,6 +27,11 @@ parser.add_argument("-dd", "--desired_dir")
 
 args = parser.parse_args()
 s_data = create_s_data(args)
+if (len(s_data["ids"]) > 10):
+    raise Exception("A maximum of 10 IDs can be entered.")
+
+if (len(s_data["attributes"]) > 5):
+    raise Exception("A maximum of 5 Key Values can be entered.")
 
 search_data(s_data=s_data, processes=args.processes,
             desired_dir=args.desired_dir)

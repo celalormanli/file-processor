@@ -2,7 +2,6 @@ import os
 import datetime
 import glob
 import json
-import threading
 from multiprocessing.pool import ThreadPool
 
 

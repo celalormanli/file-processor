@@ -22,7 +22,6 @@ def get_last_10_days_directories(desired_dir=None, day=None):
         day = datetime.datetime.today()
     else:
         day = datetime.datetime.strptime(day, "%y%m%d")
-
     directories = []
     for x in range(10):
         directory = get_directory(
@@ -65,7 +64,26 @@ def read_and_search_file(file_dir, search_data):
         return results
 
 
-def search_data(s_data, processes=1):
+def check_and_create_output_directory(desired_dir=None):
+    if desired_dir == None:
+        desired_dir = os.getcwd()
+    output_dir = desired_dir + "/output"
+    if (os.path.isdir(output_dir) == False):
+        os.mkdir(output_dir)
+    return output_dir
+
+
+def create_output_file(all_results=[], desired_dir=None):
+    output_dir = check_and_create_output_directory(desired_dir=desired_dir)
+    output_files_path = output_dir + "/report_file_" + \
+        datetime.datetime.today().strftime("%y%m%d%H%M%S%f")[:-3] + ".txt"
+    with open(output_files_path, "w") as f:
+        for result in all_results:
+            f.writelines(json.dumps(result)+"\n")
+    print("Report Create: " + output_files_path)
+
+
+def search_data(s_data, processes=1, desired_dir=None):
     all_results = []
     threads = []
     pool = ThreadPool(processes=processes)
@@ -79,6 +97,4 @@ def search_data(s_data, processes=1):
 
     for thread in threads:
         all_results = all_results + thread.get()
-
-    for c in all_results:
-        print(c)
+    create_output_file(all_results=all_results, desired_dir=desired_dir)

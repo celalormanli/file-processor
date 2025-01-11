@@ -172,3 +172,4 @@ cython_debug/
 
 ids_list.txt
 days/
+output/

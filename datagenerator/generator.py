@@ -5,6 +5,7 @@ import string
 import uuid
 import threading
 from pathlib import Path
+import json
 
 
 def create_directory(desired_dir=None, day=None):
@@ -40,7 +41,7 @@ def get_or_create_ids_list(number_of_id=20000000, desired_dir=None):
         f = open("ids_list.txt", "r")
         list_from_file = f.read()
         list_from_file = list_from_file.replace(
-            "[", "").replace("]", "").replace(" ", "")
+            "[", "").replace("]", "").replace(" ", "").replace("'", "")
         ids_list = list_from_file.split(",")
     else:
         for x in range(number_of_id):
@@ -63,10 +64,22 @@ def create_file(day_dir, file_number, ids_list):
             val_7 = random_value_generator()
             val_8 = random_value_generator()
             val_9 = random_value_generator()
-            data = '{"id": '+str(id)+',"attributes": {"val_0": '+val_0+',"val_1": '+val_1+',"val_2": '+val_2+',"val_3": '+val_3 + \
-                ',"val_4": '+val_4+',"val_5": '+val_5+',"val_6": '+val_6 + \
-                ',"val_7": '+val_7+',"val_8": '+val_8+',"val_9": '+val_9+'}}'
-            f.writelines(str(data)+"\n")
+            data = {
+                "id": id,
+                "attributes": {
+                    "val_0": val_0,
+                    "val_1": val_1,
+                    "val_2": val_2,
+                    "val_3": val_3,
+                    "val_4": val_4,
+                    "val_5": val_5,
+                    "val_6": val_6,
+                    "val_7": val_7,
+                    "val_8": val_8,
+                    "val_9": val_9
+                }
+            }
+            f.writelines(json.dumps(data)+"\n")
 
 
 def create_files(day_dir, ids_list):
